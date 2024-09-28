@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { CallbacksType, StatesType, TodoItemType } from '../AppContainer';
 
@@ -13,11 +13,15 @@ const EditTodo = ({ states, callbacks }: PropsType) => {
   const { id } = useParams<TodoParam>();
 
   const todoItem = states.todoList.find((item) => item.id === parseInt(id ? id : '0'));
-  if (!todoItem) {
-    navigate('/todos');
-    return <></>;
-  }
-  const [todoOne, setTodoOne] = useState<TodoItemType>({ ...todoItem });
+  const [todoOne, setTodoOne] = useState<TodoItemType>(
+    todoItem ?? { id: 0, todo: '', desc: '', done: false },
+  );
+
+  useEffect(() => {
+    if (!todoItem) {
+      navigate('/todos');
+    }
+  }, [todoItem, navigate]);
 
   const updateTodoHandler = () => {
     if (todoOne.todo.trim() === '' || todoOne.desc.trim() === '') {
