@@ -22,7 +22,10 @@ const App = ({ states, callbacks }: Props) => {
           <Route path='/about' element={<About />} />
           <Route path='/todos' element={<TodoList states={states} callbacks={callbacks} />} />
           <Route path='/todos/add' element={<AddTodo callbacks={callbacks} />} />
-          <Route path='/todos/edit/:id' element={<EditTodo callbacks={callbacks} />} />
+          <Route
+            path='/todos/edit/:id'
+            element={<EditTodo states={states} callbacks={callbacks} />}
+          />
           <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
